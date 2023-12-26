@@ -15,14 +15,12 @@ public class quaternion : MonoBehaviour
     public TextMeshProUGUI messageLove;
     public TextMeshProUGUI anguloJ1;
 
-    public Toggle[] toggleJuntas;
+    public Toggle toggleJ1;
+    public Toggle toggleJ2;
+    public Toggle toggleJ3;
+    public Toggle toggleJ4;
+    public Toggle toggleJ5;
 
-     //.Esses são pra especificamente confirmar qual das juntas queremos mover quando pressionamos o botão no protoboard.
-    public bool btnJ1 = false;
-    public bool btnJ2 = false;
-    public bool btnJ3 = false;
-    public bool btnJ4 = false;
-    public bool btnJ5 = false;
 
      #region ConfiguracoesJ1
 
@@ -228,28 +226,28 @@ public class quaternion : MonoBehaviour
 
                  //Se a mensagem na carta de amor do arduino constar "botaoblalbalbla" e a booleana do botão especifico estiver ativa.
                     //Mover J1
-                    if(mensagem.Contains("botao01Pressionado") && btnJ1 == true)
+                    if(mensagem.Contains("botao01Pressionado") && toggleJ1.isOn)
                 {
                     //Botoes, um para valor minimo e outro pra maximo, diferentes direcçoes!
                     UpdateJ1Min();
                     Debug.Log("botao01Pressionado");
                 }
-                    if(mensagem.Contains("botao02Pressionado") && btnJ1 == true)
+                    if(mensagem.Contains("botao02Pressionado") && toggleJ1.isOn)
                 {
-                    //Botoes, um para valor minimo e outro pra maximo, diferentes direcçoes!
+                    //.Botoes, um para valor minimo e outro pra maximo, diferentes direcçoes!
                     UpdateJ1Max();
                      Debug.Log("botao02Pressionado");
                 }
 
 
                     //Mover J2
-                    if(mensagem.Contains("botao01Pressionado") && btnJ2 == true)
+                    if(mensagem.Contains("botao01Pressionado") && toggleJ2.isOn)
                 {
                     //Botoes, um para valor minimo e outro pra maximo, diferentes direcçoes!
                     UpdateJ2Min();
                     Debug.Log("botao01Pressionado");
                 }
-                    if(mensagem.Contains("botao02Pressionado") && btnJ2 == true)
+                    if(mensagem.Contains("botao02Pressionado") && toggleJ2.isOn)
                 {
                     //Botoes, um para valor minimo e outro pra maximo, diferentes direcçoes!
                     UpdateJ2Max();
@@ -258,13 +256,13 @@ public class quaternion : MonoBehaviour
 
 
                     //Mover J3
-                    if(mensagem.Contains("botao01Pressionado") && btnJ3 == true)
+                    if(mensagem.Contains("botao01Pressionado") && toggleJ3.isOn)
                 {
                     //Botoes, um para valor minimo e outro pra maximo, diferentes direcçoes!
                     UpdateJ3Min();
                     Debug.Log("botao01Pressionado");
                 }
-                    if(mensagem.Contains("botao02Pressionado") && btnJ3 == true)
+                    if(mensagem.Contains("botao02Pressionado") && toggleJ3.isOn)
                 {
                     //Botoes, um para valor minimo e outro pra maximo, diferentes direcçoes!
                     UpdateJ3Max();
@@ -273,13 +271,13 @@ public class quaternion : MonoBehaviour
 
 
                     //Mover J4
-                    if(mensagem.Contains("botao01Pressionado") && btnJ4 == true)
+                    if(mensagem.Contains("botao01Pressionado") && toggleJ4.isOn)
                 {
                     //Botoes, um para valor minimo e outro pra maximo, diferentes direcçoes!
                     UpdateJ4Min();
                     Debug.Log("botao01Pressionado");
                 }
-                    if(mensagem.Contains("botao02Pressionado") && btnJ4 == true)
+                    if(mensagem.Contains("botao02Pressionado") && toggleJ4.isOn)
                 {
                     //Botoes, um para valor minimo e outro pra maximo, diferentes direcçoes!
                     UpdateJ4Max();
@@ -288,13 +286,13 @@ public class quaternion : MonoBehaviour
 
 
                     //Mover J5
-                    if(mensagem.Contains("botao01Pressionado") && btnJ5 == true)
+                    if(mensagem.Contains("botao01Pressionado") && toggleJ5.isOn)
                 {
                     //Botoes, um para valor minimo e outro pra maximo, diferentes direcçoes!
                     UpdateJ5Min();
                     Debug.Log("botao01Pressionado");
                 }
-                    if(mensagem.Contains("botao02Pressionado") && btnJ5 == true)
+                    if(mensagem.Contains("botao02Pressionado") && toggleJ5.isOn)
                 {
                     //Botoes, um para valor minimo e outro pra maximo, diferentes direcçoes!
                     UpdateJ5Max();
@@ -303,11 +301,11 @@ public class quaternion : MonoBehaviour
 
 
                 //Lidando com carta de amor pra colocar e tirar da tela, metodo clãssico de limpar string pra dar um ar atualizado kkk
-                 if(mensagem.Contains("botao01Pressionado") && btnJ1 == true)
+                 if(mensagem.Contains("botao01Pressionado") && toggleJ1.isOn)
                 {
                     messageLove.text = "Botão Negativo Pressionado";
                 }
-                    else if(mensagem.Contains("botao02Pressionado") && btnJ1 == true)
+                    else if(mensagem.Contains("botao02Pressionado") && toggleJ1.isOn)
                 {
                     messageLove.text = "Botão Positivo Pressionado";
                 }
