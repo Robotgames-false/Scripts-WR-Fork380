@@ -8,14 +8,24 @@ using Unity.VisualScripting;
 
 public class quaternion : MonoBehaviour
 {
+
     public SerialPort serialPort = new SerialPort ("COM19", 9600); 
 
-      [Header("Serial Unity-Arduino")]
+     [Header("Serial Unity-Arduino")]
      //...Carte de amor, que será recebido do arduino,, com certas informações, interprete cada informação do seu jeito e use ela como quiser.
     public string mensagem;
-    public string mensagem2 = "1";
     public TextMeshProUGUI messageLove;  //Botão a ser pressionado
+
+    [Header("Pra Usuário Definir A Porta Ou Tipo De Arduino.")]
+    public string portaArduino;
+    public TextMeshProUGUI inputArduinoPorta;
+
+     [Header("Angulos das Juntas Na UI")]
     public TextMeshProUGUI anguloJ1;  //Mostrar o angulo da junta a ser movida, em tempo real na tela.
+    public TextMeshProUGUI anguloJ2;
+    public TextMeshProUGUI anguloJ3;
+    public TextMeshProUGUI anguloJ4;
+    public TextMeshProUGUI anguloJ5;
 
     //O toggle é o componente da UI que funciona como bool.
      [Header("Ativar e Desativar Botões Da Protoboard")]
@@ -25,7 +35,7 @@ public class quaternion : MonoBehaviour
     public Toggle toggleJ4;
     public Toggle toggleJ5;
 
-     [Header("======Vida das Juntas======")]
+     [Header("=============Vida das Juntas=============")]
      #region ConfiguracoesJ1
 
      [Header("Vida J1")]
@@ -191,7 +201,6 @@ public class quaternion : MonoBehaviour
     void Update()
     {
         //VALORES MAXIMOS MINIMOS DOS SLIDERS NA UI DE CADA JUNTA, ESSE VALOR É DO MOVIMENTO * VELCOCIDADE.
-
         sliderJ1.minValue = -1;
         sliderJ1.maxValue = 1;
 
@@ -207,29 +216,55 @@ public class quaternion : MonoBehaviour
         sliderJ5.minValue = -1;
         sliderJ5.maxValue = 1;
 
+        //Sliders de velociadade na UI.
         velocidadeJ1 = sliderVelocityJ1.value;
         velocidadeJ2 = sliderVelocityJ2.value;
         velocidadeJ3 = sliderVelocityJ3.value;
         velocidadeJ4 = sliderVelocityJ4.value;
         velocidadeJ5 = sliderVelocityJ5.value;
 
+        //Atualizar os metodos que serão usados pelo SliderController.
         UpdateJ1();
         UpdateJ2();
         UpdateJ3();
         UpdateJ4();
         UpdateJ5();
-         anguloJ1.text = "Angulo: J1.Y: " + RotationJ1Y;
 
- 
-             serialPort.Write("1");
 
+        //Pra receber automatação dos loops do arduino e exeutar os metodos na unity.
+        if (mensagem.Contains("FORJ1MIN"))
+        {
+            UpdateJ1Min();
+        }
+        else if(mensagem.Contains("FORJ1MAX")){
+            UpdateJ1Max();
+        }
+
+        if (mensagem.Contains("FORJ2MIN"))
+        {
+            UpdateJ2Min();
+        }
+        else if(mensagem.Contains("FORJ2MAX")){
+            UpdateJ2Max();
+        }
+
+        //o texto do angulo J da UI vai receber a string concatenada com o progresso do seu angulo.
+        anguloJ1.text = "Angulo J1.Y: " + RotationJ1Y;
+        anguloJ2.text = "Angulo J2.Z: " + RotationJ2Z;
+        anguloJ3.text = "Angulo J3.Z: " + RotationJ3Z;
+        anguloJ4.text = "Angulo J4.Y: " + RotationJ4Y;
+        anguloJ5.text = "Angulo J5.Y: " + RotationJ5Z;
+
+
+        portaArduino = inputArduinoPorta.text;
 
         if (serialPort.IsOpen)
         {
             try
             {
-                mensagem = serialPort.ReadLine();
 
+                //Receber carta de amor do arduino.
+                mensagem = serialPort.ReadLine();
                  //Se a mensagem na carta de amor do arduino constar "botaoblalbalbla" e a booleana do botão especifico estiver ativa.
                     //Mover J1
                     if(mensagem.Contains("botao01Pressionado") && toggleJ1.isOn)
@@ -330,11 +365,38 @@ public class quaternion : MonoBehaviour
             }
         }
 
+        //Enviar Carta de amor.
+         if(serialPort.IsOpen && RotationJ1Y < 0){
+            try
+            {
+                serialPort.Write("A");
+            }
+            catch (System.Exception)
+            {
+                
+                throw;
+            }
+        }
+        else if (serialPort.IsOpen && RotationJ1Y > 0)
+        {
+             try
+            {
+                serialPort.Write("B");
+            }
+            catch (System.Exception)
+            {
+                
+                throw;
+            }
+        }
+
         //Loops
   
        
     }
+    
 
+        //Se sair do programa fecha a porta.
       void OnApplicationQuit() 
     {
         serialPort.Close();
