@@ -34,6 +34,10 @@ public class quaternion : MonoBehaviour
     public Toggle toggleJ3;
     public Toggle toggleJ4;
     public Toggle toggleJ5;
+    public Toggle iniciarToggle;
+    public float bazar = 5f;
+
+    public GameObject Painel;
 
      [Header("=============Vida das Juntas=============")]
      #region ConfiguracoesJ1
@@ -197,9 +201,14 @@ public class quaternion : MonoBehaviour
         serialPort.Open();
     }
 
+       void vambazar(){
+         Debug.Log("YieldNot");
+       }
+
     // Update is called once per frame
     void Update()
     {
+
         //VALORES MAXIMOS MINIMOS DOS SLIDERS NA UI DE CADA JUNTA, ESSE VALOR É DO MOVIMENTO * VELCOCIDADE.
         sliderJ1.minValue = -1;
         sliderJ1.maxValue = 1;
@@ -230,8 +239,7 @@ public class quaternion : MonoBehaviour
         UpdateJ4();
         UpdateJ5();
 
-
-        //Pra receber automatação dos loops do arduino e exeutar os metodos na unity.
+        /*/Pra receber automatação dos loops do arduino e exeutar os metodos na unity.
         if (mensagem.Contains("FORJ1MIN"))
         {
             UpdateJ1Min();
@@ -247,6 +255,7 @@ public class quaternion : MonoBehaviour
         else if(mensagem.Contains("FORJ2MAX")){
             UpdateJ2Max();
         }
+        */
 
         //o texto do angulo J da UI vai receber a string concatenada com o progresso do seu angulo.
         anguloJ1.text = "Angulo J1.Y: " + RotationJ1Y;
@@ -365,7 +374,7 @@ public class quaternion : MonoBehaviour
             }
         }
 
-        //Enviar Carta de amor.
+        //Enviar Carta de amor pra arduino.
          if(serialPort.IsOpen && RotationJ1Y < 0){
             try
             {
@@ -507,7 +516,7 @@ public class quaternion : MonoBehaviour
 
 
         //Botões J3
-            public void UpdateJ3Min()
+        public void UpdateJ3Min()
     {
         valorDoSliderJ3 = sliderJ3.value;
         RotationJ3Z += valorButtonJ3Min * velocidadeJ3 * Time.deltaTime;
@@ -525,7 +534,7 @@ public class quaternion : MonoBehaviour
 
 
         //Botões J4
-            public void UpdateJ4Min()
+        public void UpdateJ4Min()
     {
         valorDoSliderJ4 = sliderJ4.value;
         RotationJ4Y += valorButtonJ4Min * velocidadeJ4 * Time.deltaTime;
@@ -543,7 +552,7 @@ public class quaternion : MonoBehaviour
 
 
         //Botões J5
-            public void UpdateJ5Min()
+        public void UpdateJ5Min()
     {
         valorDoSliderJ5 = sliderJ5.value;
         RotationJ5Z += valorButtonJ5Min * velocidadeJ5 * Time.deltaTime;
