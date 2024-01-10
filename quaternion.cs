@@ -384,10 +384,14 @@ public class quaternion : MonoBehaviour
         {
             case 0:
             Debug.Log("10");
+            J1Min = -10;
+            J1Max = 10;
             break;
             
             case 1:
             Debug.Log("20");
+            J1Min = -20;
+            J1Max = 20;
             break;
 
             case 2:
