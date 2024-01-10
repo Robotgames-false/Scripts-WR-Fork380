@@ -8,7 +8,7 @@ using System.IO.Ports;
 public class quaternion : MonoBehaviour
 {
 
-    public SerialPort serialPort; 
+    public SerialPort serialPort;
 
     [Header("Serial Unity-Arduino")]
      //...Carte de amor, que será recebido do arduino,, com certas informações, interprete cada informação do seu jeito e use ela como quiser.
@@ -69,6 +69,9 @@ public class quaternion : MonoBehaviour
     public Slider sliderYieldJ4;
     public Slider sliderYieldJ5;
 
+    [Header("Limites Dos Buttons Das Juntas Na UI")]
+    public TMP_Dropdown limitesDropdownJ1;
+
 
     [Header("Rastreio De Funções")]
     public GameObject Painel;
@@ -103,7 +106,7 @@ public class quaternion : MonoBehaviour
     [Header("Limites J1")]
     // valor da rotação Minima e maxima do eixo Y.
     public float J1Min; // Valor Minimo da rotaçãoY!
-    public float J1Max; // Valor Máximo da rotaçãoY!
+    public float J1Max; // Valor Máximo da rotaçãoY
     
     #endregion
 
@@ -377,8 +380,44 @@ public class quaternion : MonoBehaviour
         ativarJ5Min();
         ativarJ5Max();
 
+        switch (limitesDropdownJ1.value)
+        {
+            case 0:
+            Debug.Log("10");
+            break;
+            
+            case 1:
+            Debug.Log("20");
+            break;
 
-        
+            case 2:
+            Debug.Log("30");
+            break;
+            
+            case 3:
+            Debug.Log("40");
+            break;
+
+            case 4:
+            Debug.Log("50");
+            break;
+            
+            case 5:
+            Debug.Log("60");
+            break;
+
+            case 6:
+            Debug.Log("70");
+            break;
+            
+            case 7:
+            Debug.Log("80");
+            break;
+
+            case 8:
+            Debug.Log("90");
+            break;
+        }
 
         /*/Pra receber automatação dos loops do arduino e exeutar os metodos na unity.
         if (mensagem.Contains("FORJ1MIN"))
@@ -553,8 +592,6 @@ public class quaternion : MonoBehaviour
 
     }
     
-
-
     //Atualização das nossas operaçoes pra rotacionar o objecto!
     //primeiro o valor do slider recebe o valor do slider do input no UI do usuario
     //segundo o valor da rotação recebe o valor do slider vezes velociade do objecto vezes variaçao do tempo real.
