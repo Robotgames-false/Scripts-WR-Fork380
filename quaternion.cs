@@ -21,6 +21,10 @@ public class quaternion : MonoBehaviour
 
     [Header("Painel City")]
     public GameObject painelConfigPort;
+    public GameObject painelControleButtons;
+    public GameObject painelControleSlider;
+    public GameObject painelAutoControle;
+
 
     [Header("Angulos das Juntas Na UI")]
     public TextMeshProUGUI anguloJ1;  //Mostrar, o angulo da junta a ser movida, em tempo real na tela.
