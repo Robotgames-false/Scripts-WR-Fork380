@@ -311,6 +311,18 @@ public class quaternion : MonoBehaviour
         painelConfigPort.SetActive(true);
     }
 
+    public void OpenControleButton(){
+        painelControleButtons.SetActive(true);
+        painelControleSlider.SetActive(false);
+    }
+    public void OpenControleSlider(){
+        painelControleSlider.SetActive(true);
+        painelControleButtons.SetActive(false);
+    }
+    public void OpenAutoControle(){
+        
+    }
+
 
     // Update is called once per frame
     void Update()
