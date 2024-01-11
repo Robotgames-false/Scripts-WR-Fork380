@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -19,7 +18,9 @@ public class quaternion : MonoBehaviour
     public string portaArduino;
     public TMP_InputField inputArduinoPorta;
     public TextMeshProUGUI statusPort;
-    public GameObject ConfigPort;
+
+    [Header("Painel City")]
+    public GameObject painelConfigPort;
 
     [Header("Angulos das Juntas Na UI")]
     public TextMeshProUGUI anguloJ1;  //Mostrar, o angulo da junta a ser movida, em tempo real na tela.
@@ -260,6 +261,8 @@ public class quaternion : MonoBehaviour
         serialPort = new SerialPort();
         // Configurar outras configurações do SerialPort, se necessário
         serialPort.BaudRate = 9600;
+
+        painelConfigPort.SetActive(false);
     }
 
     public void OpenPorta(){
@@ -296,8 +299,12 @@ public class quaternion : MonoBehaviour
     }
 
     IEnumerator entrarCena(){
-        yield return new WaitForSeconds(8f);
-        ConfigPort.SetActive(false);
+        yield return new WaitForSeconds(5f);
+        painelConfigPort.SetActive(false);
+    }
+
+    public void OpenPortConfig(){
+        painelConfigPort.SetActive(true);
     }
 
 
@@ -379,49 +386,6 @@ public class quaternion : MonoBehaviour
         ativarJ4Max();
         ativarJ5Min();
         ativarJ5Max();
-
-        switch (limitesDropdownJ1.value)
-        {
-            case 0:
-            Debug.Log("10");
-            J1Min = -10;
-            J1Max = 10;
-            break;
-            
-            case 1:
-            Debug.Log("20");
-            J1Min = -20;
-            J1Max = 20;
-            break;
-
-            case 2:
-            Debug.Log("30");
-            break;
-            
-            case 3:
-            Debug.Log("40");
-            break;
-
-            case 4:
-            Debug.Log("50");
-            break;
-            
-            case 5:
-            Debug.Log("60");
-            break;
-
-            case 6:
-            Debug.Log("70");
-            break;
-            
-            case 7:
-            Debug.Log("80");
-            break;
-
-            case 8:
-            Debug.Log("90");
-            break;
-        }
 
         /*/Pra receber automatação dos loops do arduino e exeutar os metodos na unity.
         if (mensagem.Contains("FORJ1MIN"))
@@ -907,5 +871,61 @@ public class quaternion : MonoBehaviour
     updateJ5Max.isOn = true;
     yield return new WaitForSeconds(yieldJ5);   
     }
+  }
+
+  public float number;
+  
+
+  public void limitesDropdown(){
+            switch (limitesDropdownJ1.value)
+        {
+            case 0:
+            Debug.Log($"10, {number}");
+            break;
+            J1Min = -10;
+            J1Max = 10;
+            case 1:
+            Debug.Log("20");
+            J2Min = -20;
+            J2Min = 20;
+            break;
+
+            case 2:
+            Debug.Log("30");
+            J3Min = -30;
+            J3Max = 30;
+            break;
+            
+            case 3:
+            Debug.Log("40");
+           
+            break;
+
+            case 4:
+            Debug.Log("50");
+            
+            break;
+            
+            case 5:
+            Debug.Log("60");
+           
+            break;
+
+            case 6:
+            Debug.Log("70");
+           
+            break;
+            
+            case 7:
+            Debug.Log("80");
+           
+            break;
+
+            case 8:
+            Debug.Log("90");
+           
+            break;
+        }
+
   }
 }
