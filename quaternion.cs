@@ -19,6 +19,9 @@ public class quaternion : MonoBehaviour
     public TMP_InputField inputArduinoPorta;
     public TextMeshProUGUI statusPort;
 
+    public Toggle conectionSerial;
+    
+
     [Header("Painel City")]
     public GameObject painelConfigPort;
     public GameObject painelControleButtons;
@@ -314,10 +317,6 @@ public class quaternion : MonoBehaviour
         painelConfigPort.SetActive(false);
     }
 
-    public void OpenPortConfig(){
-        painelConfigPort.SetActive(true);
-    }
-
     public void OpenControleButton(){
         painelControleButtons.SetActive(true);
         painelControleSlider.SetActive(false);
@@ -416,6 +415,15 @@ public class quaternion : MonoBehaviour
         else if (esconderRepouso.isOn == false){
             painelRepouso.SetActive(true);
         }
+
+        if (conectionSerial.isOn == true)
+        {
+            painelConfigPort.SetActive(true);
+        }
+        else if (conectionSerial.isOn == false){
+            painelConfigPort.SetActive(false);
+        }
+
 
         /*/Pra receber automatação dos loops do arduino e exeutar os metodos na unity.
         if (mensagem.Contains("FORJ1MIN"))
