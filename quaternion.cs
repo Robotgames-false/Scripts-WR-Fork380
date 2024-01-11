@@ -53,6 +53,8 @@ public class quaternion : MonoBehaviour
     public Toggle updateJ5Min;
     public Toggle updateJ5Max;
 
+    public Toggle esconderRepouso;
+
     [Header("Tempo Do Repouso Da Junta Na UI")]
     public TextMeshProUGUI floatJ1;
     public TextMeshProUGUI floatJ2;
@@ -320,7 +322,7 @@ public class quaternion : MonoBehaviour
         painelControleButtons.SetActive(false);
     }
     public void OpenAutoControle(){
-        
+        painelAutoControle.SetActive(true);
     }
 
 
@@ -402,6 +404,13 @@ public class quaternion : MonoBehaviour
         ativarJ4Max();
         ativarJ5Min();
         ativarJ5Max();
+
+        if(esconderRepouso.isOn == true){
+            painelAutoControle.SetActive(true);
+        }
+        else if (esconderRepouso.isOn == false){
+            painelAutoControle.SetActive(false);
+        }
 
         /*/Pra receber automatação dos loops do arduino e exeutar os metodos na unity.
         if (mensagem.Contains("FORJ1MIN"))
