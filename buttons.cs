@@ -5,21 +5,27 @@ using UnityEngine.UI;
 
 public class buttons : MonoBehaviour
 {
-    public Button meuBotao;
-    private float tempoDecorrido;
+   public Button meuBotao;
+    private float tempoInicial;
 
-    void Update()
+    void Start()
     {
         if (meuBotao != null)
         {
             // Adiciona este script como um handler para o evento OnPointerUp do botão
             meuBotao.onClick.AddListener(OnPointerUp);
 
-            // Atualiza o tempo decorrido
-            tempoDecorrido += Time.deltaTime;
+            // Armazena o tempo inicial
+            tempoInicial = Time.time;
+        }
+    }
 
+    void Update()
+    {
+        if (meuBotao != null)
+        {
             // Verifica se passaram 10 segundos
-            if (tempoDecorrido >= 10f)
+            if (Time.time - tempoInicial >= 10f)
             {
                 ChamarOnPointerUp();
             }
