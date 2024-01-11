@@ -411,10 +411,10 @@ public class quaternion : MonoBehaviour
         ativarJ5Max();
 
         if(esconderRepouso.isOn == true){
-            painelRepouso.SetActive(true);
+            painelRepouso.SetActive(false);
         }
         else if (esconderRepouso.isOn == false){
-            painelRepouso.SetActive(false);
+            painelRepouso.SetActive(true);
         }
 
         /*/Pra receber automatação dos loops do arduino e exeutar os metodos na unity.
