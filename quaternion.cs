@@ -25,6 +25,8 @@ public class quaternion : MonoBehaviour
     public GameObject painelControleSlider;
     public GameObject painelAutoControle;
 
+    public GameObject painelRepouso;
+
 
     [Header("Angulos das Juntas Na UI")]
     public TextMeshProUGUI anguloJ1;  //Mostrar, o angulo da junta a ser movida, em tempo real na tela.
@@ -269,6 +271,9 @@ public class quaternion : MonoBehaviour
         serialPort.BaudRate = 9600;
 
         painelConfigPort.SetActive(false);
+        painelRepouso.SetActive(false);
+        painelControleButtons.SetActive(!false);
+        painelControleSlider.SetActive(false);
     }
 
     public void OpenPorta(){
@@ -406,10 +411,10 @@ public class quaternion : MonoBehaviour
         ativarJ5Max();
 
         if(esconderRepouso.isOn == true){
-            painelAutoControle.SetActive(true);
+            painelRepouso.SetActive(true);
         }
         else if (esconderRepouso.isOn == false){
-            painelAutoControle.SetActive(false);
+            painelRepouso.SetActive(false);
         }
 
         /*/Pra receber automatação dos loops do arduino e exeutar os metodos na unity.
