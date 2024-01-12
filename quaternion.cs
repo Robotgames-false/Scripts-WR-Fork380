@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -8,10 +7,10 @@ using System.IO.Ports;
 public class quaternion : MonoBehaviour
 {
 
-    public SerialPort serialPort; 
+    public SerialPort serialPort;
 
     [Header("Serial Unity-Arduino")]
-     //...Carte de amor, que será recebido do arduino,, com certas informações, interprete cada informação do seu jeito e use ela como quiser.
+     //...Carte de amor, que será recebido do arduino, com certas informações, interprete cada informação do seu jeito e use ela como quiser.
     public string mensagem;
     public TextMeshProUGUI messageLove;  //Botão a ser pressionado
 
@@ -19,7 +18,18 @@ public class quaternion : MonoBehaviour
     public string portaArduino;
     public TMP_InputField inputArduinoPorta;
     public TextMeshProUGUI statusPort;
-    public GameObject ConfigPort;
+
+    public Toggle conectionSerial;
+    
+
+    [Header("Painel City")]
+    public GameObject painelConfigPort;
+    public GameObject painelControleButtons;
+    public GameObject painelControleSlider;
+    public GameObject painelAutoControle;
+
+    public GameObject painelRepouso;
+
 
     [Header("Angulos das Juntas Na UI")]
     public TextMeshProUGUI anguloJ1;  //Mostrar, o angulo da junta a ser movida, em tempo real na tela.
@@ -48,6 +58,8 @@ public class quaternion : MonoBehaviour
     public Toggle updateJ5Min;
     public Toggle updateJ5Max;
 
+    public Toggle esconderRepouso;
+
     [Header("Tempo Do Repouso Da Junta Na UI")]
     public TextMeshProUGUI floatJ1;
     public TextMeshProUGUI floatJ2;
@@ -68,6 +80,9 @@ public class quaternion : MonoBehaviour
     public Slider sliderYieldJ3;
     public Slider sliderYieldJ4;
     public Slider sliderYieldJ5;
+
+    [Header("Limites Dos Buttons Das Juntas Na UI")]
+    public TMP_Dropdown limitesDropdownJ1;
 
 
     [Header("Rastreio De Funções")]
@@ -103,7 +118,7 @@ public class quaternion : MonoBehaviour
     [Header("Limites J1")]
     // valor da rotação Minima e maxima do eixo Y.
     public float J1Min; // Valor Minimo da rotaçãoY!
-    public float J1Max; // Valor Máximo da rotaçãoY!
+    public float J1Max; // Valor Máximo da rotaçãoY
     
     #endregion
 
@@ -257,6 +272,11 @@ public class quaternion : MonoBehaviour
         serialPort = new SerialPort();
         // Configurar outras configurações do SerialPort, se necessário
         serialPort.BaudRate = 9600;
+
+        painelConfigPort.SetActive(false);
+        painelRepouso.SetActive(false);
+        painelControleButtons.SetActive(!false);
+        painelControleSlider.SetActive(false);
     }
 
     public void OpenPorta(){
@@ -293,8 +313,20 @@ public class quaternion : MonoBehaviour
     }
 
     IEnumerator entrarCena(){
-        yield return new WaitForSeconds(8f);
-        ConfigPort.SetActive(false);
+        yield return new WaitForSeconds(5f);
+        painelConfigPort.SetActive(false);
+    }
+
+    public void OpenControleButton(){
+        painelControleButtons.SetActive(true);
+        painelControleSlider.SetActive(false);
+    }
+    public void OpenControleSlider(){
+        painelControleSlider.SetActive(true);
+        painelControleButtons.SetActive(false);
+    }
+    public void OpenAutoControle(){
+        painelAutoControle.SetActive(true);
     }
 
 
@@ -377,8 +409,21 @@ public class quaternion : MonoBehaviour
         ativarJ5Min();
         ativarJ5Max();
 
+        if(esconderRepouso.isOn == true){
+            painelRepouso.SetActive(false);
+        }
+        else if (esconderRepouso.isOn == false){
+            painelRepouso.SetActive(true);
+        }
 
-        
+        if (conectionSerial.isOn == true)
+        {
+            painelConfigPort.SetActive(true);
+        }
+        else if (conectionSerial.isOn == false){
+            painelConfigPort.SetActive(false);
+        }
+
 
         /*/Pra receber automatação dos loops do arduino e exeutar os metodos na unity.
         if (mensagem.Contains("FORJ1MIN"))
@@ -553,8 +598,6 @@ public class quaternion : MonoBehaviour
 
     }
     
-
-
     //Atualização das nossas operaçoes pra rotacionar o objecto!
     //primeiro o valor do slider recebe o valor do slider do input no UI do usuario
     //segundo o valor da rotação recebe o valor do slider vezes velociade do objecto vezes variaçao do tempo real.
@@ -866,5 +909,61 @@ public class quaternion : MonoBehaviour
     updateJ5Max.isOn = true;
     yield return new WaitForSeconds(yieldJ5);   
     }
+  }
+
+  public float number;
+  
+
+  public void limitesDropdown(){
+            switch (limitesDropdownJ1.value)
+        {
+            case 0:
+            Debug.Log($"10, {number}");
+            break;
+            J1Min = -10;
+            J1Max = 10;
+            case 1:
+            Debug.Log("20");
+            J2Min = -20;
+            J2Min = 20;
+            break;
+
+            case 2:
+            Debug.Log("30");
+            J3Min = -30;
+            J3Max = 30;
+            break;
+            
+            case 3:
+            Debug.Log("40");
+           
+            break;
+
+            case 4:
+            Debug.Log("50");
+            
+            break;
+            
+            case 5:
+            Debug.Log("60");
+           
+            break;
+
+            case 6:
+            Debug.Log("70");
+           
+            break;
+            
+            case 7:
+            Debug.Log("80");
+           
+            break;
+
+            case 8:
+            Debug.Log("90");
+           
+            break;
+        }
+
   }
 }
